@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "ts-node": {
+    "esm": true,
+    "moduleResolution": "nodenext",
+    "transpileOnly": true,
+    "skipProject": true,
+    "experimentalResolver": true
+  },
+  "compilerOptions": {
+    "moduleResolution": "nodenext",
+    "module": "NodeNext",
+    "rewriteRelativeImportExtensions": false
+  }
+}

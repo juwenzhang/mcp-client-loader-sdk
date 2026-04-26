@@ -1,0 +1,55 @@
+{
+  "mcpServers": {
+    "amap-maps-streamableHTTP": {
+      "url": "https://mcp.amap.com/mcp?key=${AMAP_MCP_KEY}",
+      "transport": "streamable-http",
+      "headers": {},
+      "timeout": 30000,
+      "enabled": true
+    },
+    "ollama-llm": {
+      "transport": "stdio",
+      "command": "docker",
+      "args": [
+        "exec",
+        "-i",
+        "${OLLAMA_DOCKER_CONTAINER_NAME}",
+        "curl",
+        "-X",
+        "POST",
+        "${OLLAMA_HOST}/api/generate",
+        "-H",
+        "Content-Type: application/json",
+        "-d",
+        "{\"model\":\"${OLLAMA_MODEL_NAME}\",\"prompt\":\"${prompt}\"}"
+      ],
+      "env": {
+        "OLLAMA_HOST": "${OLLAMA_HOST}"
+      },
+      "timeout": 60000,
+      "enabled": true
+    },
+    "ollama-http": {
+      "url": "${OLLAMA_HOST}/api/generate",
+      "transport": "streamable-http",
+      "timeout": 60000,
+      "enabled": true
+    },
+    "local-cli-tool": {
+      "command": "node",
+      "args": [
+        "./local-cli-mcp-server.js"
+      ],
+      "transport": "stdio",
+      "cwd": "./mcp-servers",
+      "timeout": 10000,
+      "enabled": true
+    }
+  },
+  "executor": {
+    "logLevel": "debug",
+    "logPath": "./mcp-executor-logs",
+    "maxConcurrent": 5,
+    "errorHandler": "./executor-error.js"
+  }
+}
