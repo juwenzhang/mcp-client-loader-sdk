@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import dotenv from 'dotenv';
-import { HttpClient, StdioClient } from './mcp-client.js';
+import { HttpClient, StdioClient } from './mcp-client';
 
 dotenv.config();
 
