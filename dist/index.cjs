@@ -1,7 +1,12 @@
+"use strict";
+var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __defProps = Object.defineProperties;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __propIsEnum = Object.prototype.propertyIsEnumerable;
 var __knownSymbol = (name, symbol) => (symbol = Symbol[name]) ? symbol : /* @__PURE__ */ Symbol.for("Symbol." + name);
@@ -18,6 +23,27 @@ var __spreadValues = (a, b) => {
   return a;
 };
 var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  // If the importer is in node compatibility mode or this is not an ESM
+  // file that has been converted to a CommonJS file using a Babel-
+  // compatible transform (i.e. "__esModule" has not been set), then set
+  // "default" to the CommonJS "module.exports" for node compatibility.
+  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+  mod
+));
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 var __async = (__this, __arguments, generator) => {
   return new Promise((resolve, reject) => {
     var fulfilled = (value) => {
@@ -55,7 +81,30 @@ var __asyncGenerator = (__this, __arguments, generator) => {
 };
 
 // src/index.ts
-import dotenv from "dotenv";
+var index_exports = {};
+__export(index_exports, {
+  AdapterFactory: () => AdapterFactory,
+  CacheManager: () => CacheManager,
+  ConfigLoader: () => ConfigLoader,
+  ConfigResolver: () => ConfigResolver,
+  ConfigValidator: () => ConfigValidator,
+  EnvironmentDetector: () => EnvironmentDetector,
+  EventManager: () => EventManager,
+  HttpClient: () => HttpClient,
+  InterceptorManager: () => InterceptorManager,
+  Logger: () => Logger,
+  McpClientLoaderSdk: () => McpClientLoaderSdk,
+  McpContext: () => McpContext,
+  McpExecutor: () => McpExecutor,
+  McpRegistry: () => McpRegistry,
+  MiddlewareManager: () => MiddlewareManager,
+  PluginManager: () => PluginManager,
+  RateLimiter: () => RateLimiter,
+  RetryManager: () => RetryManager,
+  StdioClient: () => StdioClient
+});
+module.exports = __toCommonJS(index_exports);
+var import_dotenv = __toESM(require("dotenv"), 1);
 
 // src/core/McpClient.ts
 var McpClient = class {
@@ -483,7 +532,7 @@ ${bodyText}`);
 };
 
 // src/clients/StdioClient.ts
-import { spawn } from "child_process";
+var import_child_process = require("child_process");
 var StdioClient = class extends McpClient {
   constructor(options) {
     super();
@@ -511,7 +560,7 @@ var StdioClient = class extends McpClient {
         let isResolved = false;
         const startProcess = () => {
           var _a, _b;
-          this.process = spawn(this.options.command, this.options.args || [], {
+          this.process = (0, import_child_process.spawn)(this.options.command, this.options.args || [], {
             cwd: this.options.cwd,
             env: __spreadValues(__spreadValues({}, process.env), this.options.env),
             stdio: this.options.stdio
@@ -596,7 +645,7 @@ ${error}`;
   }
   start() {
     if (!this.process || this.process.killed) {
-      this.process = spawn(this.options.command, this.options.args || [], {
+      this.process = (0, import_child_process.spawn)(this.options.command, this.options.args || [], {
         cwd: this.options.cwd,
         env: __spreadValues(__spreadValues({}, process.env), this.options.env),
         stdio: this.options.stdio
@@ -1756,19 +1805,19 @@ var McpExecutor = class {
 };
 
 // src/config/ConfigLoader.ts
-import fs from "fs";
-import path from "path";
+var import_node_fs = __toESM(require("fs"), 1);
+var import_node_path = __toESM(require("path"), 1);
 var ConfigLoader = class {
   constructor() {
     this.resolver = new ConfigResolver();
     this.validator = new ConfigValidator();
   }
   loadFromFile(configPath) {
-    const absolutePath = path.resolve(configPath);
-    if (!fs.existsSync(absolutePath)) {
+    const absolutePath = import_node_path.default.resolve(configPath);
+    if (!import_node_fs.default.existsSync(absolutePath)) {
       throw new Error(`Config file not found: ${absolutePath}`);
     }
-    const content = fs.readFileSync(absolutePath, "utf-8");
+    const content = import_node_fs.default.readFileSync(absolutePath, "utf-8");
     const config = JSON.parse(content);
     this.validator.validate(config);
     const resolvedConfig = this.resolver.resolve(config);
@@ -1821,7 +1870,7 @@ var Logger = class {
 };
 
 // src/index.ts
-dotenv.config();
+import_dotenv.default.config();
 var McpClientLoaderSdk = class _McpClientLoaderSdk {
   constructor(registry, executor, logger, context) {
     this.registry = registry;
@@ -1936,7 +1985,8 @@ var McpClientLoaderSdk = class _McpClientLoaderSdk {
     this.executor.clearQueue();
   }
 };
-export {
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
   AdapterFactory,
   CacheManager,
   ConfigLoader,
@@ -1956,4 +2006,4 @@ export {
   RateLimiter,
   RetryManager,
   StdioClient
-};
+});
